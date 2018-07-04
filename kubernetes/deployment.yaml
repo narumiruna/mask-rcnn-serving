@@ -1,0 +1,26 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: model-serving-default-mask-rcnn
+  labels:
+    type: dlib
+    service: inference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: model-serving
+      model: default-mask-rcnn
+  template:
+    metadata:
+      labels:
+        service: model-serving
+        model: default-mask-rcnn
+    spec:
+      containers:
+      - name: server
+        image: asia.gcr.io/linker-aurora/mask-rcnn-serving:develop
+        resources:
+          requests:
+            memory: 1Gi
