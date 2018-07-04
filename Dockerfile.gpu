@@ -13,7 +13,7 @@ COPY requirements-gpu.txt .
 RUN pip3 install -U pip==9.0.3 \
     && pip3 install -U -r requirements-gpu.txt \
     && rm -rf ~/.cache/pip \
-    && rm requirements.txt
+    && rm requirements-gpu.txt
 
 WORKDIR /workspace
 
