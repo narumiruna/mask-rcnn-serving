@@ -1,7 +1,7 @@
 // vim:sw=2:ts=2:sts=2:
 syntax = "proto3";
 
-package inference;
+package serving;
 
 message DetectionResponse {
   string type = 1;
@@ -12,7 +12,7 @@ message DetectionResponse {
 
 message DetectionRequest {
     bytes image = 1;
-    Rectangle rect = 2;
+    Rectangle region = 2;
 }
 
 service ShapeDetection {
@@ -20,7 +20,8 @@ service ShapeDetection {
 }
 
 service ObjectDetection {
-    rpc Detect(DetectionRequest) returns (stream Object) {}
+    rpc DetectStream(DetectionRequest) returns (stream Object) {}
+    rpc Detect(DetectionRequest) returns (DetectionResponse) {}
 }
 
 message Point {
@@ -42,9 +43,19 @@ message Region {
   int32 height = 4;
 }
 
-message Object {
-  string label = 1;
-  Rectangle rect = 2;
-  bytes segmentation = 3;
+message Shape {
+  string contentType = 1;
+
+  // this field will be used when contentType == "polygon/points"
+  repeated Point points = 2;
+
+  // this field will be used when contentType == "polygon/series"
+  // [x1, y1, x2, y2, x3, y3, .... ]
+  repeated int32 series = 3;
 }
 
+message Object {
+  string label = 1;
+  Rectangle box = 2;
+  Shape shape = 3;
+}

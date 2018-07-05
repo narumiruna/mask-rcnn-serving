@@ -15,7 +15,7 @@ class ShapeDetectionStub(object):
       channel: A grpc.Channel.
     """
     self.Detect = channel.unary_unary(
-        '/inference.ShapeDetection/Detect',
+        '/serving.ShapeDetection/Detect',
         request_serializer=serving__pb2.DetectionRequest.SerializeToString,
         response_deserializer=serving__pb2.DetectionResponse.FromString,
         )
@@ -42,7 +42,7 @@ def add_ShapeDetectionServicer_to_server(servicer, server):
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'inference.ShapeDetection', rpc_method_handlers)
+      'serving.ShapeDetection', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -56,16 +56,28 @@ class ObjectDetectionStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.Detect = channel.unary_stream(
-        '/inference.ObjectDetection/Detect',
+    self.DetectStream = channel.unary_stream(
+        '/serving.ObjectDetection/DetectStream',
         request_serializer=serving__pb2.DetectionRequest.SerializeToString,
         response_deserializer=serving__pb2.Object.FromString,
+        )
+    self.Detect = channel.unary_unary(
+        '/serving.ObjectDetection/Detect',
+        request_serializer=serving__pb2.DetectionRequest.SerializeToString,
+        response_deserializer=serving__pb2.DetectionResponse.FromString,
         )
 
 
 class ObjectDetectionServicer(object):
   # missing associated documentation comment in .proto file
   pass
+
+  def DetectStream(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
 
   def Detect(self, request, context):
     # missing associated documentation comment in .proto file
@@ -77,12 +89,17 @@ class ObjectDetectionServicer(object):
 
 def add_ObjectDetectionServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'Detect': grpc.unary_stream_rpc_method_handler(
-          servicer.Detect,
+      'DetectStream': grpc.unary_stream_rpc_method_handler(
+          servicer.DetectStream,
           request_deserializer=serving__pb2.DetectionRequest.FromString,
           response_serializer=serving__pb2.Object.SerializeToString,
       ),
+      'Detect': grpc.unary_unary_rpc_method_handler(
+          servicer.Detect,
+          request_deserializer=serving__pb2.DetectionRequest.FromString,
+          response_serializer=serving__pb2.DetectionResponse.SerializeToString,
+      ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'inference.ObjectDetection', rpc_method_handlers)
+      'serving.ObjectDetection', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))

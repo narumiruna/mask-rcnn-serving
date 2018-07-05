@@ -17,9 +17,9 @@ _sym_db = _symbol_database.Default()
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='serving.proto',
-  package='inference',
+  package='serving',
   syntax='proto3',
-  serialized_pb=_b('\n\rserving.proto\x12\tinference\"\x91\x01\n\x11\x44\x65tectionResponse\x12\x0c\n\x04type\x18\x01 \x01(\t\x12 \n\x06points\x18\x02 \x03(\x0b\x32\x10.inference.Point\x12\"\n\x07objects\x18\x03 \x03(\x0b\x32\x11.inference.Object\x12(\n\nrectangles\x18\x04 \x03(\x0b\x32\x14.inference.Rectangle\"E\n\x10\x44\x65tectionRequest\x12\r\n\x05image\x18\x01 \x01(\x0c\x12\"\n\x04rect\x18\x02 \x01(\x0b\x32\x14.inference.Rectangle\"\x1d\n\x05Point\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\"@\n\tRectangle\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\r\n\x05width\x18\x03 \x01(\x05\x12\x0e\n\x06height\x18\x04 \x01(\x05\"=\n\x06Region\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\r\n\x05width\x18\x03 \x01(\x05\x12\x0e\n\x06height\x18\x04 \x01(\x05\"Q\n\x06Object\x12\r\n\x05label\x18\x01 \x01(\t\x12\"\n\x04rect\x18\x02 \x01(\x0b\x32\x14.inference.Rectangle\x12\x14\n\x0csegmentation\x18\x03 \x01(\x0c\x32W\n\x0eShapeDetection\x12\x45\n\x06\x44\x65tect\x12\x1b.inference.DetectionRequest\x1a\x1c.inference.DetectionResponse\"\x00\x32O\n\x0fObjectDetection\x12<\n\x06\x44\x65tect\x12\x1b.inference.DetectionRequest\x1a\x11.inference.Object\"\x00\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\rserving.proto\x12\x07serving\"\x8b\x01\n\x11\x44\x65tectionResponse\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x1e\n\x06points\x18\x02 \x03(\x0b\x32\x0e.serving.Point\x12 \n\x07objects\x18\x03 \x03(\x0b\x32\x0f.serving.Object\x12&\n\nrectangles\x18\x04 \x03(\x0b\x32\x12.serving.Rectangle\"E\n\x10\x44\x65tectionRequest\x12\r\n\x05image\x18\x01 \x01(\x0c\x12\"\n\x06region\x18\x02 \x01(\x0b\x32\x12.serving.Rectangle\"\x1d\n\x05Point\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\"@\n\tRectangle\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\r\n\x05width\x18\x03 \x01(\x05\x12\x0e\n\x06height\x18\x04 \x01(\x05\"=\n\x06Region\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\r\n\x05width\x18\x03 \x01(\x05\x12\x0e\n\x06height\x18\x04 \x01(\x05\"L\n\x05Shape\x12\x13\n\x0b\x63ontentType\x18\x01 \x01(\t\x12\x1e\n\x06points\x18\x02 \x03(\x0b\x32\x0e.serving.Point\x12\x0e\n\x06series\x18\x03 \x03(\x05\"W\n\x06Object\x12\r\n\x05label\x18\x01 \x01(\t\x12\x1f\n\x03\x62ox\x18\x02 \x01(\x0b\x32\x12.serving.Rectangle\x12\x1d\n\x05shape\x18\x03 \x01(\x0b\x32\x0e.serving.Shape2S\n\x0eShapeDetection\x12\x41\n\x06\x44\x65tect\x12\x19.serving.DetectionRequest\x1a\x1a.serving.DetectionResponse\"\x00\x32\x94\x01\n\x0fObjectDetection\x12>\n\x0c\x44\x65tectStream\x12\x19.serving.DetectionRequest\x1a\x0f.serving.Object\"\x00\x30\x01\x12\x41\n\x06\x44\x65tect\x12\x19.serving.DetectionRequest\x1a\x1a.serving.DetectionResponse\"\x00\x62\x06proto3')
 )
 
 
@@ -27,34 +27,34 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _DETECTIONRESPONSE = _descriptor.Descriptor(
   name='DetectionResponse',
-  full_name='inference.DetectionResponse',
+  full_name='serving.DetectionResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='type', full_name='inference.DetectionResponse.type', index=0,
+      name='type', full_name='serving.DetectionResponse.type', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='points', full_name='inference.DetectionResponse.points', index=1,
+      name='points', full_name='serving.DetectionResponse.points', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='objects', full_name='inference.DetectionResponse.objects', index=2,
+      name='objects', full_name='serving.DetectionResponse.objects', index=2,
       number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='rectangles', full_name='inference.DetectionResponse.rectangles', index=3,
+      name='rectangles', full_name='serving.DetectionResponse.rectangles', index=3,
       number=4, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -72,27 +72,27 @@ _DETECTIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=29,
-  serialized_end=174,
+  serialized_start=27,
+  serialized_end=166,
 )
 
 
 _DETECTIONREQUEST = _descriptor.Descriptor(
   name='DetectionRequest',
-  full_name='inference.DetectionRequest',
+  full_name='serving.DetectionRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='image', full_name='inference.DetectionRequest.image', index=0,
+      name='image', full_name='serving.DetectionRequest.image', index=0,
       number=1, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=_b(""),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='rect', full_name='inference.DetectionRequest.rect', index=1,
+      name='region', full_name='serving.DetectionRequest.region', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -110,27 +110,27 @@ _DETECTIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=176,
-  serialized_end=245,
+  serialized_start=168,
+  serialized_end=237,
 )
 
 
 _POINT = _descriptor.Descriptor(
   name='Point',
-  full_name='inference.Point',
+  full_name='serving.Point',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='x', full_name='inference.Point.x', index=0,
+      name='x', full_name='serving.Point.x', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='y', full_name='inference.Point.y', index=1,
+      name='y', full_name='serving.Point.y', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -148,41 +148,41 @@ _POINT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=247,
-  serialized_end=276,
+  serialized_start=239,
+  serialized_end=268,
 )
 
 
 _RECTANGLE = _descriptor.Descriptor(
   name='Rectangle',
-  full_name='inference.Rectangle',
+  full_name='serving.Rectangle',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='x', full_name='inference.Rectangle.x', index=0,
+      name='x', full_name='serving.Rectangle.x', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='y', full_name='inference.Rectangle.y', index=1,
+      name='y', full_name='serving.Rectangle.y', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='width', full_name='inference.Rectangle.width', index=2,
+      name='width', full_name='serving.Rectangle.width', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='height', full_name='inference.Rectangle.height', index=3,
+      name='height', full_name='serving.Rectangle.height', index=3,
       number=4, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -200,41 +200,41 @@ _RECTANGLE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=278,
-  serialized_end=342,
+  serialized_start=270,
+  serialized_end=334,
 )
 
 
 _REGION = _descriptor.Descriptor(
   name='Region',
-  full_name='inference.Region',
+  full_name='serving.Region',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='x', full_name='inference.Region.x', index=0,
+      name='x', full_name='serving.Region.x', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='y', full_name='inference.Region.y', index=1,
+      name='y', full_name='serving.Region.y', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='width', full_name='inference.Region.width', index=2,
+      name='width', full_name='serving.Region.width', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='height', full_name='inference.Region.height', index=3,
+      name='height', full_name='serving.Region.height', index=3,
       number=4, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -252,36 +252,36 @@ _REGION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=344,
-  serialized_end=405,
+  serialized_start=336,
+  serialized_end=397,
 )
 
 
-_OBJECT = _descriptor.Descriptor(
-  name='Object',
-  full_name='inference.Object',
+_SHAPE = _descriptor.Descriptor(
+  name='Shape',
+  full_name='serving.Shape',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='label', full_name='inference.Object.label', index=0,
+      name='contentType', full_name='serving.Shape.contentType', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='rect', full_name='inference.Object.rect', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='points', full_name='serving.Shape.points', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='segmentation', full_name='inference.Object.segmentation', index=2,
-      number=3, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b(""),
+      name='series', full_name='serving.Shape.series', index=2,
+      number=3, type=5, cpp_type=1, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
@@ -297,62 +297,117 @@ _OBJECT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=407,
-  serialized_end=488,
+  serialized_start=399,
+  serialized_end=475,
+)
+
+
+_OBJECT = _descriptor.Descriptor(
+  name='Object',
+  full_name='serving.Object',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='label', full_name='serving.Object.label', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='box', full_name='serving.Object.box', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='shape', full_name='serving.Object.shape', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=477,
+  serialized_end=564,
 )
 
 _DETECTIONRESPONSE.fields_by_name['points'].message_type = _POINT
 _DETECTIONRESPONSE.fields_by_name['objects'].message_type = _OBJECT
 _DETECTIONRESPONSE.fields_by_name['rectangles'].message_type = _RECTANGLE
-_DETECTIONREQUEST.fields_by_name['rect'].message_type = _RECTANGLE
-_OBJECT.fields_by_name['rect'].message_type = _RECTANGLE
+_DETECTIONREQUEST.fields_by_name['region'].message_type = _RECTANGLE
+_SHAPE.fields_by_name['points'].message_type = _POINT
+_OBJECT.fields_by_name['box'].message_type = _RECTANGLE
+_OBJECT.fields_by_name['shape'].message_type = _SHAPE
 DESCRIPTOR.message_types_by_name['DetectionResponse'] = _DETECTIONRESPONSE
 DESCRIPTOR.message_types_by_name['DetectionRequest'] = _DETECTIONREQUEST
 DESCRIPTOR.message_types_by_name['Point'] = _POINT
 DESCRIPTOR.message_types_by_name['Rectangle'] = _RECTANGLE
 DESCRIPTOR.message_types_by_name['Region'] = _REGION
+DESCRIPTOR.message_types_by_name['Shape'] = _SHAPE
 DESCRIPTOR.message_types_by_name['Object'] = _OBJECT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 DetectionResponse = _reflection.GeneratedProtocolMessageType('DetectionResponse', (_message.Message,), dict(
   DESCRIPTOR = _DETECTIONRESPONSE,
   __module__ = 'serving_pb2'
-  # @@protoc_insertion_point(class_scope:inference.DetectionResponse)
+  # @@protoc_insertion_point(class_scope:serving.DetectionResponse)
   ))
 _sym_db.RegisterMessage(DetectionResponse)
 
 DetectionRequest = _reflection.GeneratedProtocolMessageType('DetectionRequest', (_message.Message,), dict(
   DESCRIPTOR = _DETECTIONREQUEST,
   __module__ = 'serving_pb2'
-  # @@protoc_insertion_point(class_scope:inference.DetectionRequest)
+  # @@protoc_insertion_point(class_scope:serving.DetectionRequest)
   ))
 _sym_db.RegisterMessage(DetectionRequest)
 
 Point = _reflection.GeneratedProtocolMessageType('Point', (_message.Message,), dict(
   DESCRIPTOR = _POINT,
   __module__ = 'serving_pb2'
-  # @@protoc_insertion_point(class_scope:inference.Point)
+  # @@protoc_insertion_point(class_scope:serving.Point)
   ))
 _sym_db.RegisterMessage(Point)
 
 Rectangle = _reflection.GeneratedProtocolMessageType('Rectangle', (_message.Message,), dict(
   DESCRIPTOR = _RECTANGLE,
   __module__ = 'serving_pb2'
-  # @@protoc_insertion_point(class_scope:inference.Rectangle)
+  # @@protoc_insertion_point(class_scope:serving.Rectangle)
   ))
 _sym_db.RegisterMessage(Rectangle)
 
 Region = _reflection.GeneratedProtocolMessageType('Region', (_message.Message,), dict(
   DESCRIPTOR = _REGION,
   __module__ = 'serving_pb2'
-  # @@protoc_insertion_point(class_scope:inference.Region)
+  # @@protoc_insertion_point(class_scope:serving.Region)
   ))
 _sym_db.RegisterMessage(Region)
+
+Shape = _reflection.GeneratedProtocolMessageType('Shape', (_message.Message,), dict(
+  DESCRIPTOR = _SHAPE,
+  __module__ = 'serving_pb2'
+  # @@protoc_insertion_point(class_scope:serving.Shape)
+  ))
+_sym_db.RegisterMessage(Shape)
 
 Object = _reflection.GeneratedProtocolMessageType('Object', (_message.Message,), dict(
   DESCRIPTOR = _OBJECT,
   __module__ = 'serving_pb2'
-  # @@protoc_insertion_point(class_scope:inference.Object)
+  # @@protoc_insertion_point(class_scope:serving.Object)
   ))
 _sym_db.RegisterMessage(Object)
 
@@ -360,16 +415,16 @@ _sym_db.RegisterMessage(Object)
 
 _SHAPEDETECTION = _descriptor.ServiceDescriptor(
   name='ShapeDetection',
-  full_name='inference.ShapeDetection',
+  full_name='serving.ShapeDetection',
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=490,
-  serialized_end=577,
+  serialized_start=566,
+  serialized_end=649,
   methods=[
   _descriptor.MethodDescriptor(
     name='Detect',
-    full_name='inference.ShapeDetection.Detect',
+    full_name='serving.ShapeDetection.Detect',
     index=0,
     containing_service=None,
     input_type=_DETECTIONREQUEST,
@@ -384,20 +439,29 @@ DESCRIPTOR.services_by_name['ShapeDetection'] = _SHAPEDETECTION
 
 _OBJECTDETECTION = _descriptor.ServiceDescriptor(
   name='ObjectDetection',
-  full_name='inference.ObjectDetection',
+  full_name='serving.ObjectDetection',
   file=DESCRIPTOR,
   index=1,
   options=None,
-  serialized_start=579,
-  serialized_end=658,
+  serialized_start=652,
+  serialized_end=800,
   methods=[
   _descriptor.MethodDescriptor(
-    name='Detect',
-    full_name='inference.ObjectDetection.Detect',
+    name='DetectStream',
+    full_name='serving.ObjectDetection.DetectStream',
     index=0,
     containing_service=None,
     input_type=_DETECTIONREQUEST,
     output_type=_OBJECT,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='Detect',
+    full_name='serving.ObjectDetection.Detect',
+    index=1,
+    containing_service=None,
+    input_type=_DETECTIONREQUEST,
+    output_type=_DETECTIONRESPONSE,
     options=None,
   ),
 ])
