@@ -42,6 +42,7 @@ def load_bytes_image(bytes_data, mode='RGB'):
 
 def mask_to_polygon(mask):
     mask = mask.astype(np.uint8) * 255
+    # cv2.RETR_EXTERNAL: returns only extreme outer contour
     _, contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL,
                                       cv2.CHAIN_APPROX_SIMPLE)
     if len(contours) == 0:
