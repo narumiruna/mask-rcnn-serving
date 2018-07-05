@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
 
 COPY requirements.txt .
 RUN pip3 install -U pip==9.0.3 \
-    && pip3 install --proxy proxy.hinet.net -U -r requirements.txt \
+    && pip3 install -U -r requirements.txt \
     && rm -rf ~/.cache/pip \
     && rm requirements.txt
 
