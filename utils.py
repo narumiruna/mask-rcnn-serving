@@ -1,5 +1,6 @@
 import io
 
+import cv2
 import numpy as np
 from PIL import Image
 
@@ -37,3 +38,26 @@ def load_bytes_image_array(bytes_data, mode='RGB'):
 def load_bytes_image(bytes_data, mode='RGB'):
     bytes_buffer = io.BytesIO(bytes_data)
     return Image.open(bytes_buffer).convert(mode)
+
+
+def mask_to_polygon(mask):
+    mask = mask.astype(np.uint8) * 255
+    # cv2.RETR_EXTERNAL: returns only extreme outer contour
+    _, contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL,
+                                      cv2.CHAIN_APPROX_SIMPLE)
+    if len(contours) == 0:
+        return None
+
+    sequence = []
+    for x, y in np.reshape(contours[0], (-1, 2)):
+        sequence.append(x)
+        sequence.append(y)
+    return sequence
+
+
+def box_to_str(box):
+    x = box.x
+    y = box.y
+    width = box.width
+    height = box.height
+    return 'x: {}, y: {}, width: {}, height: {}'.format(x, y, width, height)
