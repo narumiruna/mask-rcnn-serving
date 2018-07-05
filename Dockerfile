@@ -25,6 +25,9 @@ COPY detection_server.py .
 COPY utils.py .
 
 COPY serving.proto .
-RUN python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. serving.proto
+COPY serving_pb2.py .
+COPY serving_pb2_grpc.py .
 
 ENTRYPOINT [ "python3", "detection_server.py" ]
+
+
