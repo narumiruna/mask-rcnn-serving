@@ -53,3 +53,11 @@ def mask_to_polygon(mask):
         sequence.append(x)
         sequence.append(y)
     return sequence
+
+
+def box_to_str(box):
+    x = box.x
+    y = box.y
+    width = box.width
+    height = box.height
+    return 'x: {}, y: {}, width: {}, height: {}'.format(x, y, width, height)
