@@ -35,6 +35,8 @@ class ObjectDetection(serving_pb2_grpc.ObjectDetectionServicer):
 
         for class_id, roi, mask in zip(class_ids, rois, masks_t):
             sequence = utils.mask_to_polygon(mask)
+            if sequence is None:
+                continue
 
             x, y, width, height = utils.roi_to_rect(roi)
             box = serving_pb2.Rectangle(x=x, y=y, width=width, height=height)
