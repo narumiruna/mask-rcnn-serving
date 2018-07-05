@@ -1,3 +1,4 @@
+import argparse
 import io
 import time
 from concurrent import futures
@@ -18,10 +19,9 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 class ObjectDetection(serving_pb2_grpc.ObjectDetectionServicer):
 
-    def __init__(self, model_path='mask_rcnn_coco.h5', mask_format='png'):
+    def __init__(self, model_path='mask_rcnn_coco.h5'):
         self._graph = tf.get_default_graph()
         self._detector = Detector(model_path)
-        self._mask_format = mask_format
 
     def DetectStream(self, request, context):
         img = utils.load_bytes_image_array(request.image)
@@ -47,10 +47,18 @@ class ObjectDetection(serving_pb2_grpc.ObjectDetectionServicer):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--host', type=str, default='0.0.0.0')
+    parser.add_argument('--port', type=str, default='50051')
+    parser.add_argument('--model', type=str, default='mask_rcnn_coco.h5')
+    args = parser.parse_args()
+
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     serving_pb2_grpc.add_ObjectDetectionServicer_to_server(
-        ObjectDetection(), server)
-    server.add_insecure_port('[::]:50051')
+        ObjectDetection(model_path=args.model), server)
+
+    address = '{}:{}'.format(args.host, args.port)
+    server.add_insecure_port(address)
     server.start()
     try:
         while True:
