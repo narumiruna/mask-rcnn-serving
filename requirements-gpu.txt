@@ -9,3 +9,4 @@ scipy==1.1.0
 tensorflow-gpu==1.8.0
 grpcio-tools
 googleapis-common-protos
+opencv-python
