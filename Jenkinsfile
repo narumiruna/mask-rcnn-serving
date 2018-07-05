@@ -101,8 +101,10 @@ pipeline {
             steps {
                 checkout scm
                 sh "gcloud container clusters get-credentials --project ${env.GCP_PROJECT} --zone ${env.GCP_ZONE} ${getClusterName()}"
-                sh "kubectl replace -f kubernetes/deployment.yaml"
-                sh "kubectl replace -f kubernetes/service.yaml"
+                sh "kubectl delete -f kubernetes/deployment.yaml"
+                sh "kubectl delete -f kubernetes/service.yaml"
+                sh "kubectl apply -f kubernetes/deployment.yaml"
+                sh "kubectl apply -f kubernetes/service.yaml"
             }
         }
     }
