@@ -30,7 +30,7 @@ def main():
 
     for i, obj in enumerate(objects):
         # print object info
-        utils.print_object(obj, index=i+1)
+        utils.print_object(obj, index=i + 1)
 
         draw = ImageDraw.Draw(img)
         # draw bounding box

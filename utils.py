@@ -54,6 +54,7 @@ def mask_to_polygon(mask):
         sequence.append(y)
     return sequence
 
+
 def print_object(o, index=None):
     l = []
     if index:
@@ -65,8 +66,6 @@ def print_object(o, index=None):
         l.append('label: {}'.format(o.label))
 
     if o.box:
-        l.append('box: (x, y, w, h) = ({x}, {y}, {w}, {h})'.format(x = o.box.x,
-                                                                   y = o.box.y,
-                                                                   w = o.box.width,
-                                                                   h = o.box.height))
+        l.append('box: (x, y, w, h) = ({x}, {y}, {w}, {h})'.format(
+            x=o.box.x, y=o.box.y, w=o.box.width, h=o.box.height))
     print(', '.join(l))
