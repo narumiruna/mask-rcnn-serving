@@ -72,8 +72,8 @@ pipeline {
                                 image.push(getTag(env.BRANCH_NAME))
                             }
                         }
-                        sh "docker rmi ${getAnchorTag(env.BRANCH_NAME)}"
-                        sh "docker rmi ${getTag(env.BRANCH_NAME)}"
+                        sh "docker rmi ${getImageName()}:${getAnchorTag(env.BRANCH_NAME)}"
+                        sh "docker rmi ${getImageName()}:${getTag(env.BRANCH_NAME)}"
                     }
                 }
                 stage('gpu') {
@@ -92,8 +92,8 @@ pipeline {
                                 image.push(getTag(env.BRANCH_NAME) + "-gpu")
                             }
                         }
-                        sh "docker rmi ${getAnchorTag(env.BRANCH_NAME)}-gpu"
-                        sh "docker rmi ${getTag(env.BRANCH_NAME)}-gpu"
+                        sh "docker rmi ${getImageName()}:${getAnchorTag(env.BRANCH_NAME)}-gpu"
+                        sh "docker rmi ${getImageName()}:${getTag(env.BRANCH_NAME)}-gpu"
                     }
                 }
             }
@@ -121,7 +121,6 @@ pipeline {
                     "<https://jenkins.linkernetworks.co/job/mask-rcnn-serving/|mask-rcnn-serving> » " +
                     "<${env.JOB_URL}|${env.BRANCH_NAME}> » " +
                     "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> passed."
-
                 slackSend channel: '#09_jenkins', color: 'good', message: message
             }
         }
@@ -133,7 +132,6 @@ pipeline {
                     "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> failed."
 
                 slackSend channel: '#09_jenkins', color: 'danger', message: message
-
                 if (needDeploy()) {
                     // message += " <!here>"
                     slackSend channel: '#01_aurora', color: 'danger', message: message
