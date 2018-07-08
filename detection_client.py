@@ -13,13 +13,16 @@ import utils
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--image', type=str, default='example.jpg')
-    parser.add_argument('--target', type=str, default='localhost:50051')
+    parser.add_argument('--host', type=str, default='0.0.0.0')
+    parser.add_argument('--port', type=str, default='50051')
     args = parser.parse_args()
+    print(args)
 
     with open(args.image, 'rb') as f:
         img = f.read()
 
-    channel = grpc.insecure_channel(args.target)
+    address = '{}:{}'.format(args.host, args.port)
+    channel = grpc.insecure_channel(address)
     stub = serving_pb2_grpc.ObjectDetectionStub(channel)
     objects = stub.DetectStream(serving_pb2.DetectionRequest(image=img))
 
@@ -27,12 +30,7 @@ def main():
 
     for i, obj in enumerate(objects):
         # print object info
-        s = 'Object: {}'.format(i + 1)
-        if obj.label:
-            s += ', label: {}'.format(obj.label)
-        if obj.box:
-            s += ', box: [{}]'.format(utils.box_to_str(obj.box))
-        print(s)
+        utils.print_object(obj, index=i + 1)
 
         draw = ImageDraw.Draw(img)
         # draw bounding box

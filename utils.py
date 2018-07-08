@@ -55,9 +55,17 @@ def mask_to_polygon(mask):
     return sequence
 
 
-def box_to_str(box):
-    x = box.x
-    y = box.y
-    width = box.width
-    height = box.height
-    return 'x: {}, y: {}, width: {}, height: {}'.format(x, y, width, height)
+def print_object(o, index=None):
+    l = []
+    if index:
+        l.append('Object #{:2d}'.format(index))
+    else:
+        l.append('Object:')
+
+    if o.label:
+        l.append('label: {}'.format(o.label))
+
+    if o.box:
+        l.append('box: (x, y, w, h) = ({x}, {y}, {w}, {h})'.format(
+            x=o.box.x, y=o.box.y, w=o.box.width, h=o.box.height))
+    print(', '.join(l))

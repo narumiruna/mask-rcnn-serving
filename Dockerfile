@@ -21,8 +21,6 @@ RUN pip3 install -U pip==9.0.3 \
 
 WORKDIR /workspace
 
-RUN wget https://github.com/matterport/Mask_RCNN/releases/download/v2.0/mask_rcnn_coco.h5
-
 COPY mrcnn mrcnn
 COPY detector.py .
 COPY detection_server.py .
@@ -30,5 +28,7 @@ COPY utils.py .
 COPY serving.proto .
 COPY serving_pb2.py .
 COPY serving_pb2_grpc.py .
+
+RUN wget https://github.com/matterport/Mask_RCNN/releases/download/v2.0/mask_rcnn_coco.h5
 
 ENTRYPOINT [ "python3", "detection_server.py" ]
