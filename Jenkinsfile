@@ -18,7 +18,7 @@ def getAnchorTag(String branchName) {
 }
 
 def getTag(String branchName) {
-    return getAnchorTag() + "-" + env.GIT_COMMIT.substring(0, 8)
+    return getAnchorTag(branchName) + "-" + env.GIT_COMMIT.substring(0, 8)
 }
 
 def getImageName () {
