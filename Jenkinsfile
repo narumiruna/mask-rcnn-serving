@@ -54,7 +54,7 @@ pipeline {
     stages {
         stage("Build Image"){
             parallel {
-                stage('ubuntu') {
+                stage('cpu') {
                     agent any
                     steps {
                         script {
@@ -69,7 +69,7 @@ pipeline {
                         }
                     }
                 }
-                stage('nvidia') {
+                stage('gpu') {
                     agent any
                     steps {
                         script {
