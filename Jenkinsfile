@@ -135,7 +135,7 @@ pipeline {
                 slackSend channel: '#09_jenkins', color: 'danger', message: message
 
                 if (needDeploy()) {
-                    message += " <!here>"
+                    // message += " <!here>"
                     slackSend channel: '#01_aurora', color: 'danger', message: message
                 }
             }
