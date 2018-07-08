@@ -1,8 +1,8 @@
-def needDeploy () {
+def shouldDeploy () {
     switch (env.BRANCH_NAME) {
-        case ~/(.+-)?rc(-.+)?/:
-        case ~/develop/:
-        case ~/master/:
+        case ~/(.+-)?rc(-.+)?$/:
+        case 'develop':
+        case 'master':
             return true
         default:
             return false
@@ -96,7 +96,7 @@ pipeline {
             agent any
             when {
                 beforeAgent true
-                expression { -> needDeploy() }
+                expression { -> shouldDeploy() }
             }
             steps {
                 checkout scm
