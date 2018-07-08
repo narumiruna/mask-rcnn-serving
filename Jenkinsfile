@@ -64,8 +64,11 @@ pipeline {
                             ]) {
                                 sh 'docker login -u _json_key --password-stdin https://asia.gcr.io < $JSON_SA'
                             }
-                            image.push(getAnchorTag(env.BRANCH_NAME))
-                            image.push(getTag(env.BRANCH_NAME))
+
+                            if (shouldDeploy()) {
+                                image.push(getAnchorTag(env.BRANCH_NAME))
+                                image.push(getTag(env.BRANCH_NAME))
+                            }
                         }
                     }
                 }
@@ -79,8 +82,11 @@ pipeline {
                             ]) {
                                 sh 'docker login -u _json_key --password-stdin https://asia.gcr.io < $JSON_SA'
                             }
-                            image.push(getAnchorTag(env.BRANCH_NAME) + "-gpu")
-                            image.push(getTag(env.BRANCH_NAME) + "-gpu")
+
+                            if (shouldDeploy()) {
+                                image.push(getAnchorTag(env.BRANCH_NAME) + "-gpu")
+                                image.push(getTag(env.BRANCH_NAME) + "-gpu")
+                            }
                         }
                     }
                 }
