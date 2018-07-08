@@ -69,6 +69,8 @@ pipeline {
                                 image.push(getAnchorTag(env.BRANCH_NAME))
                                 image.push(getTag(env.BRANCH_NAME))
                             }
+                            sh "docker rmi ${getAnchorTag(env.BRANCH_NAME)}"
+                            sh "docker rmi ${getTag(env.BRANCH_NAME)}"
                         }
                     }
                 }
@@ -87,6 +89,8 @@ pipeline {
                                 image.push(getAnchorTag(env.BRANCH_NAME) + "-gpu")
                                 image.push(getTag(env.BRANCH_NAME) + "-gpu")
                             }
+                            sh "docker rmi ${getAnchorTag(env.BRANCH_NAME)}-gpu"
+                            sh "docker rmi ${getTag(env.BRANCH_NAME)}-gpu"
                         }
                     }
                 }
