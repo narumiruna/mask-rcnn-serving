@@ -1,3 +1,5 @@
+import groovy.transform.Field
+
 def shouldDeploy () {
     switch (env.BRANCH_NAME) {
         case ~/(.+-)?rc(-.+)?$/:
@@ -69,9 +71,9 @@ pipeline {
                                 image.push(getAnchorTag(env.BRANCH_NAME))
                                 image.push(getTag(env.BRANCH_NAME))
                             }
-                            sh "docker rmi ${getAnchorTag(env.BRANCH_NAME)}"
-                            sh "docker rmi ${getTag(env.BRANCH_NAME)}"
                         }
+                        sh "docker rmi ${getAnchorTag(env.BRANCH_NAME)}"
+                        sh "docker rmi ${getTag(env.BRANCH_NAME)}"
                     }
                 }
                 stage('gpu') {
@@ -89,9 +91,9 @@ pipeline {
                                 image.push(getAnchorTag(env.BRANCH_NAME) + "-gpu")
                                 image.push(getTag(env.BRANCH_NAME) + "-gpu")
                             }
-                            sh "docker rmi ${getAnchorTag(env.BRANCH_NAME)}-gpu"
-                            sh "docker rmi ${getTag(env.BRANCH_NAME)}-gpu"
                         }
+                        sh "docker rmi ${getAnchorTag(env.BRANCH_NAME)}-gpu"
+                        sh "docker rmi ${getTag(env.BRANCH_NAME)}-gpu"
                     }
                 }
             }
