@@ -29,12 +29,12 @@ def getClusterName() {
     switch (env.BRANCH_NAME) {
         case ~/(.+-)?rc(-.+)?/:
             return "aurora-staging"
-        case ~/develop/:
+        case 'develop':
             return "aurora-dev"
-        case ~/master/:
+        case 'master':
             return "aurora-prod"
         default:
-            def message = "${env.BRANCH_NAME} is not support to cluster."
+            def message = "There is no cluster mapping to the branch ${env.BRANCH_NAME}."
             echo message
             throw new Exception(message)
     }
