@@ -9,11 +9,13 @@ def shouldDeploy () {
     }
 }
 
-def getAnchorTag () {
-    return env.BRANCH_NAME.replaceAll("[^A-Za-z0-9.]", "-").toLowerCase()
+// Get image anchor tag name from the current branch name
+// When using "Discover Pull Requests", the branch name will be replaced as the Pull Request Name
+def getAnchorTag(String branchName) {
+    return branchName.replaceAll("[^A-Za-z0-9.]", "-").toLowerCase()
 }
 
-def getTag () {
+def getTag(String branchName) {
     return getAnchorTag() + "-" + env.GIT_COMMIT.substring(0, 8)
 }
 
@@ -54,39 +56,31 @@ pipeline {
             parallel {
                 stage('ubuntu') {
                     agent any
-                    steps{
+                    steps {
                         script {
-                            checkout scm
-
-                            def image = docker.build(getImageName(), "--file Dockerfile .")
-
+                            def image = docker.build(getImageName(), ".")
                             withCredentials([
                                 file(credentialsId: 'jenkins-aurora-sa.json', variable: 'JSON_SA')
                             ]) {
                                 sh 'docker login -u _json_key --password-stdin https://asia.gcr.io < $JSON_SA'
                             }
-
-                            image.push(getAnchorTag())
-                            image.push(getTag())
+                            image.push(getAnchorTag(env.BRANCH_NAME))
+                            image.push(getTag(env.BRANCH_NAME))
                         }
                     }
                 }
                 stage('nvidia') {
                     agent any
-                    steps{
+                    steps {
                         script {
-                            checkout scm
-
                             def image = docker.build(getImageName(), "--file Dockerfile.gpu .")
-
                             withCredentials([
                                 file(credentialsId: 'jenkins-aurora-sa.json', variable: 'JSON_SA')
                             ]) {
                                 sh 'docker login -u _json_key --password-stdin https://asia.gcr.io < $JSON_SA'
                             }
-
-                            image.push(getAnchorTag() + "-nvidia")
-                            image.push(getTag() + "-nvidia")
+                            image.push(getAnchorTag(env.BRANCH_NAME) + "-gpu")
+                            image.push(getTag(env.BRANCH_NAME) + "-gpu")
                         }
                     }
                 }
