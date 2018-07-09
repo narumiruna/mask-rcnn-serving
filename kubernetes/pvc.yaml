@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: model-serving-default-mask-rcnn-pvc
+  annotations:
+    volume.beta.kubernetes.io/storage-class: slow-many
+  labels:
+    app: default-mask-rcnn
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi

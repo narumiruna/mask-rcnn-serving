@@ -107,10 +107,9 @@ pipeline {
             steps {
                 checkout scm
                 sh "gcloud container clusters get-credentials --project ${env.GCP_PROJECT} --zone ${env.GCP_ZONE} ${getClusterName()}"
-                sh "kubectl delete -f kubernetes/deployment.yaml"
-                sh "kubectl delete -f kubernetes/service.yaml"
-                sh "kubectl apply -f kubernetes/deployment.yaml"
-                sh "kubectl apply -f kubernetes/service.yaml"
+                sh "kubectl apply -f pvc.yaml"
+                sh "kubectl apply -f deployment.yaml"
+                sh "kubectl apply -f service.yaml"
             }
         }
     }
@@ -132,7 +131,7 @@ pipeline {
                     "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> failed."
 
                 slackSend channel: '#09_jenkins', color: 'danger', message: message
-                if (needDeploy()) {
+                if (shouldDeploy()) {
                     // message += " <!here>"
                     slackSend channel: '#01_aurora', color: 'danger', message: message
                 }

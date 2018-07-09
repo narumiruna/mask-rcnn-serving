@@ -18,9 +18,16 @@ spec:
         service: model-serving
         model: default-mask-rcnn
     spec:
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: model-serving-default-mask-rcnn-pvc
       containers:
       - name: server
         image: asia.gcr.io/linker-aurora/mask-rcnn-serving:develop
         resources:
           requests:
             memory: 1Gi
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data
