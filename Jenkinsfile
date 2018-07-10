@@ -60,7 +60,9 @@ pipeline {
                     agent any
                     steps {
                         script {
-                            def image = docker.build(getImageName(), ".")
+                            def tag = getImageName() + ":" + getTag(env.BRANCH_NAME)
+                            def image = docker.build(tag, ".")
+
                             withCredentials([
                                 file(credentialsId: 'jenkins-aurora-sa.json', variable: 'JSON_SA')
                             ]) {
@@ -68,19 +70,22 @@ pipeline {
                             }
 
                             if (shouldDeploy()) {
+                                image.push()
                                 image.push(getAnchorTag(env.BRANCH_NAME))
-                                image.push(getTag(env.BRANCH_NAME))
+                                sh "docker rmi ${getImageName()}:${getAnchorTag(env.BRANCH_NAME)}"
                             }
+
+                            sh "docker rmi ${tag}"
                         }
-                        sh "docker rmi ${getImageName()}:${getAnchorTag(env.BRANCH_NAME)}"
-                        sh "docker rmi ${getImageName()}:${getTag(env.BRANCH_NAME)}"
                     }
                 }
                 stage('gpu') {
                     agent any
                     steps {
                         script {
-                            def image = docker.build(getImageName(), "--file Dockerfile.gpu .")
+                            def tag = getImageName() + ":" + getTag(env.BRANCH_NAME) + "-gpu"
+                            def image = docker.build(tag, "--file Dockerfile.gpu .")
+
                             withCredentials([
                                 file(credentialsId: 'jenkins-aurora-sa.json', variable: 'JSON_SA')
                             ]) {
@@ -88,12 +93,13 @@ pipeline {
                             }
 
                             if (shouldDeploy()) {
+                                image.push()
                                 image.push(getAnchorTag(env.BRANCH_NAME) + "-gpu")
-                                image.push(getTag(env.BRANCH_NAME) + "-gpu")
+                                sh "docker rmi ${getImageName()}:${getAnchorTag(env.BRANCH_NAME)}-gpu"
                             }
+
+                            sh "docker rmi ${tag}"
                         }
-                        sh "docker rmi ${getImageName()}:${getAnchorTag(env.BRANCH_NAME)}-gpu"
-                        sh "docker rmi ${getImageName()}:${getTag(env.BRANCH_NAME)}-gpu"
                     }
                 }
             }
