@@ -24,7 +24,7 @@ spec:
           claimName: model-serving-default-mask-rcnn-pvc
       containers:
       - name: server
-        image: asia.gcr.io/linker-aurora/mask-rcnn-serving:develop
+        image: asia.gcr.io/linker-aurora/mask-rcnn-serving:rc
         resources:
           requests:
             memory: 1Gi
