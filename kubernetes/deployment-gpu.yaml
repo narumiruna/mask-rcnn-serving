@@ -1,0 +1,47 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: model-serving-default-mask-rcnn-gpu
+  labels:
+    type: dlib
+    service: inference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: model-serving
+      model: default-mask-rcnn-gpu
+  template:
+    metadata:
+      labels:
+        service: model-serving
+        model: default-mask-rcnn-gpu
+    spec:
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: model-serving-default-mask-rcnn-pvc-gpu
+      - name: nvidia-debug-tools # optional
+        hostPath:
+          path: /home/kubernetes/bin/nvidia/bin
+      - name: nvidia-libraries # required
+        hostPath:
+          path: /home/kubernetes/bin/nvidia/lib64
+      containers:
+      - name: server
+        image: asia.gcr.io/linker-aurora/mask-rcnn-serving:develop-gpu
+        resources:
+          requests:
+            memory: 1Gi
+            nvidia.com/gpu: 1
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data
+        - name: nvidia-debug-tools
+          mountPath: /usr/local/bin/nvidia
+        - name: nvidia-libraries
+          mountPath: /usr/local/nvidia/lib64
+
