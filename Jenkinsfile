@@ -52,6 +52,13 @@ pipeline {
         GCP_PROJECT = "linker-aurora"
         GCP_ZONE =  "asia-east1-a"
     }
+    parameters {
+        booleanParam(
+            name: 'ApplyGPU',
+            defaultValue: false,
+            description: 'If true, jenkins will apply *.yaml related to GPU maskrcnn.'
+        )
+    }
     stages {
         stage("Build Image"){
             parallel {
@@ -118,6 +125,12 @@ pipeline {
                         sh "kubectl apply -f kubernetes/pvc.yaml"
                         sh "kubectl apply -f kubernetes/deployment.yaml"
                         sh "kubectl apply -f kubernetes/service.yaml"
+
+                        if (params.ApplyGPU) {
+                            sh "kubectl apply -f kubernetes/pvc-gpu.yaml"
+                            sh "kubectl apply -f kubernetes/deployment-gpu.yaml"
+                            sh "kubectl apply -f kubernetes/service-gpu.yaml"
+                        }
                     }
                 }
             }
