@@ -25,8 +25,8 @@ def getImageName () {
     return "${env.GCP_DOCKER_REGISTRY}/${env.GCP_PROJECT}/mask-rcnn-serving"
 }
 
-def getClusterName() {
-    switch (env.BRANCH_NAME) {
+def getClusterName(String branchName) {
+    switch (branchName) {
         case ~/(.+-)?rc(-.+)?/:
             return "aurora-staging"
         case 'develop':
@@ -34,7 +34,7 @@ def getClusterName() {
         case 'master':
             return "aurora-prod"
         default:
-            def message = "There is no cluster mapping to the branch ${env.BRANCH_NAME}."
+            def message = "There is no cluster mapping to the branch ${branchName}."
             echo message
             throw new Exception(message)
     }
@@ -48,7 +48,6 @@ pipeline {
         timeout(time: 30, unit: 'MINUTES')
     }
     environment {
-        KUBECONFIG = "/var/lib/jenkins/.kube/config.aurora-dev"
         GCP_DOCKER_REGISTRY = "asia.gcr.io"
         GCP_PROJECT = "linker-aurora"
         GCP_ZONE =  "asia-east1-a"
@@ -111,11 +110,16 @@ pipeline {
                 expression { -> shouldDeploy() }
             }
             steps {
-                checkout scm
-                sh "gcloud container clusters get-credentials --project ${env.GCP_PROJECT} --zone ${env.GCP_ZONE} ${getClusterName()}"
-                sh "kubectl apply -f pvc.yaml"
-                sh "kubectl apply -f deployment.yaml"
-                sh "kubectl apply -f service.yaml"
+                script {
+                    withEnv([
+                        "KUBECONFIG=/var/lib/jenkins/.kube/config.${getClusterName(env.BRANCH_NAME)}"
+                    ]) {
+                        sh "gcloud container clusters get-credentials --project ${env.GCP_PROJECT} --zone ${env.GCP_ZONE} ${getClusterName(env.BRANCH_NAME)}"
+                        sh "kubectl apply -f kubernetes/pvc.yaml"
+                        sh "kubectl apply -f kubernetes/deployment.yaml"
+                        sh "kubectl apply -f kubernetes/service.yaml"
+                    }
+                }
             }
         }
     }
