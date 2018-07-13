@@ -30,7 +30,7 @@ spec:
           path: /home/kubernetes/bin/nvidia/lib64
       containers:
       - name: server
-        image: asia.gcr.io/linker-aurora/mask-rcnn-serving:rc-gpu
+        image: asia.gcr.io/linker-aurora/mask-rcnn-serving:master-gpu
         resources:
           requests:
             memory: 1Gi
