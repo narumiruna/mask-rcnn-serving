@@ -36,7 +36,7 @@ spec:
             memory: 1Gi
             nvidia.com/gpu: 1
           limits:
-            nvidia.com/gpu: 4
+            nvidia.com/gpu: 1
         securityContext:
           privileged: true
         volumeMounts:
