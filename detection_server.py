@@ -73,12 +73,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', type=str, default='0.0.0.0')
     parser.add_argument('--port', type=str, default='50051')
-    parser.add_argument('--model', type=str, default='mask_rcnn_coco.h5')
+    parser.add_argument('--model-path', type=str, default='mask_rcnn_coco.h5')
     args = parser.parse_args()
 
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 
-    mask_rcnn_detector = MaskRCNNDetector(model_path=args.model)
+    mask_rcnn_detector = MaskRCNNDetector(model_path=args.model_path)
 
     serving_pb2_grpc.add_ObjectDetectionServicer_to_server(
         ObjectDetection(detector=mask_rcnn_detector), server)

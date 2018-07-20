@@ -1,8 +1,6 @@
 import argparse
-import os
 
 import grpc
-import numpy as np
 from PIL import Image, ImageDraw
 
 import serving_pb2
@@ -12,13 +10,13 @@ import utils
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--image', type=str, default='example.jpg')
     parser.add_argument('--host', type=str, default='0.0.0.0')
     parser.add_argument('--port', type=str, default='50051')
+    parser.add_argument('--image-path', type=str, default='example.jpg')
     args = parser.parse_args()
     print(args)
 
-    with open(args.image, 'rb') as f:
+    with open(args.image_path, 'rb') as f:
         img = f.read()
 
     address = '{}:{}'.format(args.host, args.port)
@@ -26,7 +24,7 @@ def main():
     stub = serving_pb2_grpc.ObjectDetectionStub(channel)
     objects = stub.DetectStream(serving_pb2.DetectionRequest(image=img))
 
-    img = Image.open(args.image).convert('RGB')
+    img = Image.open(args.image_path).convert('RGB')
 
     for i, obj in enumerate(objects):
         # print object info

@@ -107,12 +107,12 @@ class MaskRCNNDetector(Detector):
 
 def test():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', type=str, default='mask_rcnn_coco.h5')
-    parser.add_argument('--image', type=str, default='example.jpg')
+    parser.add_argument('--model-path', type=str, default='mask_rcnn_coco.h5')
+    parser.add_argument('--image-path', type=str, default='example.jpg')
     args = parser.parse_args()
 
-    detector = MaskRCNNDetector(args.model)
-    image = load_image_array(args.image)
+    detector = MaskRCNNDetector(args.model_path)
+    image = load_image_array(args.image_path)
     detected_objects = detector(image)
 
     for detected_object in detected_objects:
