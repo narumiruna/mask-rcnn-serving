@@ -33,13 +33,9 @@ RUN pip3 install pip==9.0.3 \
 
 WORKDIR /workspace
 
-COPY detector.py .
-COPY detection_server.py .
-COPY utils.py .
-COPY serving.proto .
-COPY serving_pb2.py .
-COPY serving_pb2_grpc.py .
+COPY . .
+RUN python3 setup.py install
 
 RUN wget https://github.com/matterport/Mask_RCNN/releases/download/v2.0/mask_rcnn_coco.h5
 
-ENTRYPOINT [ "python3", "detection_server.py" ]
+ENTRYPOINT [ "python3", "-m","model_serving.server" ]
