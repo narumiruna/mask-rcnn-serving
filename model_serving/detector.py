@@ -8,7 +8,7 @@ from mrcnn import model as modellib
 from mrcnn import utils
 from mrcnn.config import Config
 
-from utils import load_image_array
+from .utils import load_image_array
 
 CLASS_NAMES = [
     'BG', 'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train',
