@@ -3,9 +3,7 @@ import argparse
 import grpc
 from PIL import Image, ImageDraw
 
-from . import serving_pb2
-from . import serving_pb2_grpc
-from . import utils
+from . import serving_pb2, serving_pb2_grpc, utils
 
 
 def main():

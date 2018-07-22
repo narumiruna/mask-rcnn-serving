@@ -1,5 +1,9 @@
-import pip
 from setuptools import find_packages, setup
+
+requirements = [
+    'cython', 'googleapis-common-protos', 'grpcio-tools', 'h5py', 'imgaug',
+    'keras', 'numpy', 'opencv-python', 'Pillow', 'scikit-image', 'scipy'
+]
 
 setup(
     name='model_serving',
@@ -9,7 +13,4 @@ setup(
     author_email='info@linkernetworks.com',
     url='https://www.linkernetworks.com',
     packages=find_packages(),
-    install_requires=[
-        str(r.req) for r in pip.req.parse_requirements(
-            'requirements.txt', session=pip.download.PipSession())
-    ])
+    install_requires=requirements)

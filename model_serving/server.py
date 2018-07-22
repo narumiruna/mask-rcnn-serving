@@ -4,9 +4,7 @@ from concurrent import futures
 
 import grpc
 
-from . import serving_pb2
-from . import serving_pb2_grpc
-from . import utils
+from . import serving_pb2, serving_pb2_grpc, utils
 from .detector import MaskRCNNDetector
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
