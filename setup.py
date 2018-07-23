@@ -6,9 +6,9 @@ requirements = [
 ]
 
 setup(
-    name='model_serving',
+    name='mask-rcnn-serving',
     version='0.1',
-    description='Machine learning model serving',
+    description='Mask R-CNN serving',
     author='Linker Networks',
     author_email='info@linkernetworks.com',
     url='https://www.linkernetworks.com',

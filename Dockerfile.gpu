@@ -38,4 +38,4 @@ RUN python3 setup.py install
 
 RUN wget https://github.com/matterport/Mask_RCNN/releases/download/v2.0/mask_rcnn_coco.h5
 
-ENTRYPOINT [ "python3", "-m", "model_serving.server" ]
+ENTRYPOINT [ "python3", "-m", "mask_rcnn_serving.server" ]
