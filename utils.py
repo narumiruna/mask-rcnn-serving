@@ -49,9 +49,16 @@ def mask_to_polygon(mask):
         return None
 
     sequence = []
-    for x, y in np.reshape(contours[0], (-1, 2)):
+    xy = np.reshape(contours[0], (-1, 2))
+
+    # avoid degenerate polygon
+    if xy.shape[0] <= 2:
+        return None
+
+    for x, y in xy:
         sequence.append(x)
         sequence.append(y)
+
     return sequence
 
 
