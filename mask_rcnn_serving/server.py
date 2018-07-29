@@ -72,18 +72,20 @@ def main():
     parser.add_argument('--host', type=str, default='0.0.0.0')
     parser.add_argument('--port', type=str, default='50051')
     parser.add_argument('--model-path', type=str, default='mask_rcnn_coco.h5')
+    parser.add_argument('--max-workers', type=int, default=10)
     args = parser.parse_args()
 
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=args.max_workers))
 
-    mask_rcnn_detector = MaskRCNNDetector(model_path=args.model_path)
+    detector = MaskRCNNDetector(model_path=args.model_path)
 
     serving_pb2_grpc.add_ObjectDetectionServicer_to_server(
-        ObjectDetection(detector=mask_rcnn_detector), server)
+        ObjectDetection(detector=detector), server)
 
     address = '{}:{}'.format(args.host, args.port)
     server.add_insecure_port(address)
     server.start()
+    print("Listening at {}".format(address))
     try:
         while True:
             time.sleep(_ONE_DAY_IN_SECONDS)
