@@ -10,7 +10,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', type=str, default='0.0.0.0')
     parser.add_argument('--port', type=str, default='50051')
-    parser.add_argument('--image-path', type=str, default='example.jpg')
+    parser.add_argument(
+        '--image-path',
+        type=str,
+        default='example.jpg',
+        help='path of image file')
     args = parser.parse_args()
     print(args)
 

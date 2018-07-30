@@ -1,7 +1,10 @@
+import inspect
 import io
 
 import cv2
 import numpy as np
+import yaml
+from mrcnn.config import Config
 from PIL import Image
 
 
@@ -76,3 +79,48 @@ def print_object(o, index=None):
         l.append('box: (x, y, w, h) = ({x}, {y}, {w}, {h})'.format(
             x=o.box.x, y=o.box.y, w=o.box.width, h=o.box.height))
     print(', '.join(l))
+
+
+def load_yaml(file):
+    with open(file, 'r') as fp:
+        return yaml.load(fp)
+
+
+def save_yaml(data, file):
+    with open(file, 'w') as fp:
+        yaml.dump(data, stream=fp)
+
+
+def save_config(obj, file):
+    data = {}
+
+    members = inspect.getmembers(obj)
+    for member in members:
+        name, value = member
+
+        if not name.startswith('__') and not callable(getattr(obj, name)):
+
+            # convert tuple to list
+            if isinstance(value, tuple):
+                value = list(value)
+
+            # convert ndarray to list
+            if isinstance(value, np.ndarray):
+                value = value.tolist()
+
+            data[name] = value
+
+    save_yaml(data, file)
+
+
+def load_config(file):
+    data = load_yaml(file)
+
+    obj = Config()
+    for name, value in data.items():
+        setattr(obj, name, value)
+
+    # re-compute attributes
+    obj.__init__()
+
+    return obj

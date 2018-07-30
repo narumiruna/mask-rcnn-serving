@@ -9,7 +9,7 @@ from mrcnn import model as modellib
 from mrcnn import utils
 from mrcnn.config import Config
 
-from .utils import load_image_array
+from .utils import load_image_array, load_config
 
 CLASS_NAMES = [
     'BG', 'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train',
@@ -66,16 +66,16 @@ class Detector(object):
 
 class MaskRCNNDetector(Detector):
 
-    def __init__(self, model_path, verbose=1):
+    def __init__(self, model_path, model_config, verbose=1):
         self._model_path = model_path
+        self._model_config = model_config
         self._verbose = verbose
         self._graph = tf.get_default_graph()
 
         if not os.path.exists(self._model_path):
             utils.download_trained_weights(self._model_path)
 
-        config = InferenceConfig()
-        self._model = modellib.MaskRCNN('inference', config,
+        self._model = modellib.MaskRCNN('inference', model_config,
                                         tempfile.TemporaryDirectory().name)
         self._model.load_weights(self._model_path, by_name=True)
 
@@ -104,11 +104,26 @@ class MaskRCNNDetector(Detector):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model-path', type=str, default='mask_rcnn_coco.h5')
-    parser.add_argument('--image-path', type=str, default='example.jpg')
+    parser.add_argument(
+        '--model-path',
+        type=str,
+        default='mask_rcnn_coco.h5',
+        help='path of model file')
+    parser.add_argument(
+        '--model-config',
+        type=str,
+        default='config/inference.yaml',
+        help='path of inference config')
+    parser.add_argument(
+        '--image-path',
+        type=str,
+        default='example.jpg',
+        help='path of image file')
     args = parser.parse_args()
 
-    detector = MaskRCNNDetector(args.model_path)
+    model_config = load_config(args.model_config)
+
+    detector = MaskRCNNDetector(args.model_path, model_config)
     image = load_image_array(args.image_path)
     detected_objects = detector(image)
 

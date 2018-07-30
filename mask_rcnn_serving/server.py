@@ -6,6 +6,7 @@ import grpc
 
 from . import serving_pb2, serving_pb2_grpc, utils
 from .detector import MaskRCNNDetector
+from .utils import load_config
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
@@ -71,13 +72,24 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', type=str, default='0.0.0.0')
     parser.add_argument('--port', type=str, default='50051')
-    parser.add_argument('--model-path', type=str, default='mask_rcnn_coco.h5')
+    parser.add_argument(
+        '--model-path',
+        type=str,
+        default='mask_rcnn_coco.h5',
+        help='path of model file')
+    parser.add_argument(
+        '--model-config',
+        type=str,
+        default='config/inference.yaml',
+        help='path of inference config file')
     parser.add_argument('--max-workers', type=int, default=10)
     args = parser.parse_args()
 
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=args.max_workers))
+    server = grpc.server(
+        futures.ThreadPoolExecutor(max_workers=args.max_workers))
 
-    detector = MaskRCNNDetector(model_path=args.model_path)
+    model_config = load_config(args.model_config)
+    detector = MaskRCNNDetector(args.model_path, model_config)
 
     serving_pb2_grpc.add_ObjectDetectionServicer_to_server(
         ObjectDetection(detector=detector), server)
