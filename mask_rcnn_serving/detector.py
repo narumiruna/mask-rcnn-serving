@@ -35,11 +35,7 @@ class InferenceConfig(Config):
     NUM_CLASSES = 1 + 80
 
 
-class DetectedObject(object):
-    pass
-
-
-class MaskRCNNDetectedObject(DetectedObject):
+class MaskRCNNObject(object):
 
     def __init__(self, roi, class_id, score, mask):
         self.roi = roi
@@ -100,7 +96,7 @@ class MaskRCNNDetector(Detector):
 
         detected_objects = []
         for roi, class_id, score, mask in zip(rois, class_ids, scores, masks):
-            obj = MaskRCNNDetectedObject(roi, class_id, score, mask)
+            obj = MaskRCNNObject(roi, class_id, score, mask)
             detected_objects.append(obj)
 
         return detected_objects
